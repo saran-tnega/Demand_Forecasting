@@ -5,18 +5,20 @@ const moment = require('moment');
 const data = [];
 // const a = require('../data.csv')
 // fs.createReadStream(a)
-fs.createReadStream('../data.csv')
+fs.createReadStream('../7mape.csv')
   .pipe(csv())
 /* A callback function that is called when the data event is emitted. */
   .on('data', (row) => {
-    const datetime = moment(row['DATETIME'], 'DD-MM-YYYY HH:mm').toISOString();
+    // const datetime = moment(row['datetime'], 'DD-MM-YYYY HH:mm').utc().format('YYYY-MM-DD HH:mm');
+    // const datetime = moment(row['datetime'], 'DD-MM-YYYY HH:mm').format('YYYY-MM-DD HH:mm:ssZ');
+    const datetime = moment(row['datetime'], 'DD-MM-YYYY HH:mm').format('YYYY-MM-DD HH:mm');
     const demand = parseFloat(row['Demand']);
     data.push({ datetime, demand });
   })
   .on('end', () => {
     console.log(data);
     
-fs.writeFile('data_fromcons.json', JSON.stringify(data), (err) => {
+fs.writeFile('sea.json', JSON.stringify(data), (err) => {
   if (err) throw err;
   console.log('Data saved to file');
 });

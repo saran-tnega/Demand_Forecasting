@@ -32,7 +32,9 @@ const Chart = () => {
   const now = new Date();
 
 // Get the index of the data point closest to the current date
-const index = data.findIndex(item => new Date(item.datetime) >= now);
+// const index = data.findIndex(item => new Date(item.datetime) >= now);
+// const index = data.findIndex(item => new Date(item.datetime) >= now.getTime() + 1.5 * 60 * 60 * 1000);
+const index = data.findIndex(item => new Date(item.datetime) >= now.getTime() + 1.3 * 60 * 60 * 1000);
 
 // Set the start and end index of the brush to show data from the current date to 7 days ago
 const startIndex = Math.max(index - 7, 0);
@@ -106,7 +108,7 @@ const endIndex = Math.min(index, data.length - 1);
         <Line type="monotone" dataKey="demand" stroke="green"  />
       </LineChart>
       <br/>
-      <center><h1>TN-Electricity Demand Forecasting 23-24 (MAR) by 15minutes 👇</h1></center>
+      <center><h1>TN-Electricity Demand Forecasting 23-24 (MAR) by <b>90minutes</b>👇</h1></center>
       <LineChart width={1800} height={500} data={filteredData2}
        margin={{
          top: 55,
@@ -115,6 +117,7 @@ const endIndex = Math.min(index, data.length - 1);
          bottom: 5,
         }}
       >
+        
         <Legend />
               <Brush         
           dataKey="datetime"
